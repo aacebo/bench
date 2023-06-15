@@ -93,6 +93,10 @@ func GetByEmail(email string) *User {
 		log.Error(err.Error())
 	}
 
+	if v.DeletedAt != nil {
+		return nil
+	}
+
 	return &v
 }
 
