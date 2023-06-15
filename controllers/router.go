@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"bench/controllers/languages"
 	"bench/controllers/sessions"
 	"bench/controllers/users"
 	"net/http"
@@ -23,6 +24,7 @@ func New() *chi.Mux {
 	r.Route("/v1", func(r chi.Router) {
 		users.New(r)
 		sessions.New(r)
+		languages.New(r)
 	})
 
 	return r
