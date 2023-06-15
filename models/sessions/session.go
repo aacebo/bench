@@ -28,16 +28,6 @@ func New(userId string) *Session {
 	return &self
 }
 
-func Ping() bool {
-	_, err := pg.Exec(`SELECT 1 FROM sessions limit 1`)
-
-	if err != nil {
-		return false
-	}
-
-	return true
-}
-
 func GetByID(id string) *Session {
 	v := Session{}
 	err := pg.QueryRow(

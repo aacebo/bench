@@ -3,6 +3,7 @@ package languages
 import (
 	"bench/logger"
 	"bench/postgres"
+	"database/sql"
 	"time"
 )
 
@@ -50,4 +51,32 @@ func Get() []*Language {
 	}
 
 	return arr
+}
+
+func GetByName(name string) *Language {
+	v := Language{}
+	err := pg.QueryRow(
+		`
+			SELECT *
+			FROM languages
+			WHERE name = $1
+		`,
+		name,
+	).Scan(
+		&v.ID,
+		&v.IconURL,
+		&v.Name,
+		&v.IsConcurrent,
+		&v.CreatedAt,
+	)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil
+		}
+
+		log.Error(err.Error())
+	}
+
+	return &v
 }
