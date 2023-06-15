@@ -11,7 +11,7 @@ import (
 var client *ec2.Client
 var log = logger.New("bench:container")
 
-func Client() *ec2.Client {
+func EC2() *ec2.Client {
 	if client == nil {
 		cfg, err := config.LoadDefaultConfig(context.Background())
 

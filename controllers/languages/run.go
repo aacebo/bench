@@ -10,8 +10,8 @@ import (
 
 func Run() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		_ = r.Context().Value("lang").(*model.Language)
-		c, err := container.New()
+		lang := r.Context().Value("lang").(*model.Language)
+		c, err := container.New(*lang.Name, "")
 
 		if err != nil {
 			response.Internal(err.Error()).Do(w, r)
