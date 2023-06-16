@@ -15,6 +15,7 @@ var log = logger.New("bench:models:users")
 
 type User struct {
 	ID        *string    `json:"id"`
+	Type      Type       `json:"type"`
 	Name      *string    `json:"name"`
 	Email     *string    `json:"email"`
 	Password  *string    `json:"-"`
@@ -26,6 +27,7 @@ type User struct {
 func New(name string, email string, password string) *User {
 	now := time.Now()
 	self := User{
+		Type:      USER,
 		Name:      &name,
 		Email:     &email,
 		Password:  &password,
@@ -47,6 +49,7 @@ func GetByID(id string) *User {
 		id,
 	).Scan(
 		&v.ID,
+		&v.Type,
 		&v.Name,
 		&v.Email,
 		&v.Password,
@@ -77,6 +80,7 @@ func GetByEmail(email string) *User {
 		email,
 	).Scan(
 		&v.ID,
+		&v.Type,
 		&v.Name,
 		&v.Email,
 		&v.Password,
@@ -129,10 +133,11 @@ func (self *User) create() {
 	self.ID = &id
 	_, err := pg.Exec(
 		`
-			INSERT INTO users (id, name, email, password, created_at, updated_at)
-			VALUES ($1, $2, $3, $4, $5, $6)
+			INSERT INTO users (id, type, name, email, password, created_at, updated_at)
+			VALUES ($1, $2, $3, $4, $5, $6, $7)
 		`,
 		self.ID,
+		self.Type,
 		self.Name,
 		self.Email,
 		self.Password,
@@ -150,10 +155,11 @@ func (self *User) update() {
 	self.UpdatedAt = &now
 	_, err := pg.Exec(
 		`
-			UPDATE users SET name = $2, email = $3, password = $4, updated_at = $5
+			UPDATE users SET type = $2, name = $3, email = $4, password = $5, updated_at = $6
 			WHERE id = $1
 		`,
 		self.ID,
+		self.Type,
 		self.Name,
 		self.Email,
 		self.Password,

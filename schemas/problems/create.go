@@ -14,7 +14,7 @@ type Create struct {
 }
 
 func NewCreate(r *http.Request) (*Create, owl.Errors) {
-	self := &Create{}
+	self := Create{}
 	err := render.DecodeJSON(r.Body, &self)
 
 	if err != nil {
@@ -22,5 +22,5 @@ func NewCreate(r *http.Request) (*Create, owl.Errors) {
 	}
 
 	errs := owl.Validate(self)
-	return self, errs
+	return &self, errs
 }
