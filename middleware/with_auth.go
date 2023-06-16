@@ -10,9 +10,14 @@ import (
 	"net/http"
 
 	"github.com/golang-jwt/jwt/v4"
+	"golang.org/x/exp/slices"
 )
 
-func WithAuth() func(http.Handler) http.Handler {
+func WithAuth(types ...users.Type) func(http.Handler) http.Handler {
+	if len(types) == 0 {
+		types = []users.Type{users.USER, users.ADMIN}
+	}
+
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			ctx := r.Context()
@@ -45,7 +50,7 @@ func WithAuth() func(http.Handler) http.Handler {
 
 			me := users.GetByID(*session.UserID)
 
-			if me == nil {
+			if me == nil || !slices.Contains(types, me.Type) {
 				response.Unauthorized().Do(w, r)
 				return
 			}

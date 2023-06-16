@@ -2,6 +2,7 @@ package problems
 
 import (
 	"bench/middleware"
+	"bench/models/users"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -13,7 +14,7 @@ func New(r chi.Router) {
 	)
 
 	r.With(
-		middleware.WithAuth(),
+		middleware.WithAuth(users.ADMIN),
 	).Post(
 		"/problems",
 		Create(),
