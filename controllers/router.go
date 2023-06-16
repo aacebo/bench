@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"bench/controllers/languages"
+	"bench/controllers/problems"
 	"bench/controllers/sessions"
 	"bench/controllers/users"
 	"net/http"
@@ -25,6 +26,7 @@ func New() *chi.Mux {
 		users.New(r)
 		sessions.New(r)
 		languages.New(r)
+		problems.New(r)
 	})
 
 	return r
