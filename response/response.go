@@ -10,9 +10,9 @@ import (
 type Response[T any] struct {
 	Meta   map[string]interface{} `json:"meta,omitempty"`
 	Errors owl.Errors             `json:"errors,omitempty"`
-	Data   T                      `json:"data,omitempty"`
+	Data   T                      `json:"data"`
 
-	status *int `json:"-"`
+	status *int
 }
 
 func New[T any](data T) *Response[T] {

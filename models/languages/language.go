@@ -14,6 +14,7 @@ type Language struct {
 	ID           *string    `json:"id"`
 	IconURL      *string    `json:"icon_url"`
 	Name         *string    `json:"name"`
+	Version      *string    `json:"version"`
 	IsConcurrent *bool      `json:"is_concurrent"`
 	CreatedAt    *time.Time `json:"created_at"`
 }
@@ -39,6 +40,7 @@ func Get() []*Language {
 			&v.ID,
 			&v.IconURL,
 			&v.Name,
+			&v.Version,
 			&v.IsConcurrent,
 			&v.CreatedAt,
 		)
@@ -66,6 +68,7 @@ func GetByName(name string) *Language {
 		&v.ID,
 		&v.IconURL,
 		&v.Name,
+		&v.Version,
 		&v.IsConcurrent,
 		&v.CreatedAt,
 	)
