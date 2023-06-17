@@ -4,6 +4,7 @@ import (
 	"bench/controllers/languages"
 	"bench/controllers/problems"
 	"bench/controllers/sessions"
+	"bench/controllers/tests"
 	"bench/controllers/users"
 	"net/http"
 	"time"
@@ -27,6 +28,7 @@ func New() *chi.Mux {
 		sessions.New(r)
 		languages.New(r)
 		problems.New(r)
+		tests.New(r)
 	})
 
 	return r
