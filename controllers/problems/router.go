@@ -19,4 +19,12 @@ func New(r chi.Router) {
 		"/problems",
 		Create(),
 	)
+
+	r.With(
+		middleware.WithAuth(users.ADMIN),
+		middleware.WithProblem(),
+	).Patch(
+		"/problems/{problem}",
+		Update(),
+	)
 }

@@ -145,7 +145,6 @@ func (self *Problem) update() {
 		self.Name,
 		self.DisplayName,
 		self.Description,
-		self.UpdatedAt,
 		now,
 	)
 
